@@ -1,0 +1,313 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Routinity App",
+    "description": "Api Spec For Routinity Apps",
+    "version": "1.0"
+  },
+  "servers": [{ "url": "http://localhost:8080/api" }],
+  "components": {
+    "schemas": {
+      "Routinity": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "activity": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "x-42c-format": "o:date",
+            "example": "2020-08-31 06:00:00",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "x-42c-format": "o:date",
+            "example": "2020-08-31 06:00:00",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$",
+            "minLength": 10,
+            "maxLength": 10
+          }
+        }
+      },
+      "CreateOrUpdateRoutinity": {
+        "type": "object",
+        "properties": {
+          "activity": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date",
+            "x-42c-format": "o:date",
+            "example": "2020-08-31 06:00:00",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$",
+            "minLength": 10,
+            "maxLength": 10
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date",
+            "x-42c-format": "o:date",
+            "example": "2020-08-31 06:00:00",
+            "pattern": "^[0-9]{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01])$",
+            "minLength": 10,
+            "maxLength": 10
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "RoutinityAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key",
+        "description": "Authentication for Category API"
+      }
+    }
+  },
+  "paths": {
+    "/routinities": {
+      "get": {
+        "tags": ["Routinity API"],
+        "description": "List All Routinities",
+        "summary": "List All Routinities",
+        "security": [
+          {
+            "RoutinityAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success get all routinities",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Routinity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create new routinity",
+        "summary": "Create new routinity",
+        "tags": ["Routinity API"],
+        "security": [
+          {
+            "RoutinityAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateRoutinity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success Create Routinity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Routinity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/routinity/{routinityId}": {
+      "get": {
+        "tags": ["Routinity API"],
+        "security": [
+          {
+            "RoutinityAuth": []
+          }
+        ],
+        "description": "Get routinity by id",
+        "summary": "Get routinity by id",
+        "parameters": [
+          {
+            "name": "routinityId",
+            "in": "path",
+            "description": "Routinity Id",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Get Routinity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Routinity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Routinity API"],
+        "security": [
+          {
+            "RoutinityAuth": []
+          }
+        ],
+        "description": "Update routinity by id",
+        "summary": "Update routinity by id",
+        "parameters": [
+          {
+            "name": "routinityId",
+            "in": "path",
+            "description": "Routinity Id",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrUpdateRoutinity"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success Update Routinity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Routinity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Delete routinity by id",
+        "summary": "Delete routinity by id",
+        "parameters": [
+          {
+            "name": "routinityId",
+            "in": "path",
+            "description": "Routinity Id",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": ["name"],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success delete routinity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "number"
+                    },
+                    "status": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
